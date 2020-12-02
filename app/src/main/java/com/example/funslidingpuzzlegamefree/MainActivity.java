@@ -12,18 +12,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-
+    int move_value = 0;
+    TextView move_text;
     private int[][] pos = new int[10][10];
     private Button restart_btn;
     private Random rand = new Random();
     int id = 0, id2 = 0;
     ImageView img;
-
+    boolean status = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,11 +37,14 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     shuffleTable(view);
+                    move_value = 0;
+                    move_text.setText(move_value + "");
                 }
             }
         );
 
         img = findViewById(R.id.imageView1);
+        move_text = findViewById(R.id.textView2);
         id = 1;
         img.setId(id);
         ImageView image1 = findViewById(id);
@@ -48,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Swap(1);
+                    //move_value = move_value + 1;
+                    //move_text.setText(move_value + "");
+
                 }
             }
         );
@@ -60,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Swap(2);
+
                     }
                 }
         );
@@ -72,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Swap(3);
+
                     }
                 }
         );
@@ -84,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Swap(4);
+
                     }
                 }
         );
@@ -96,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Swap(5);
+
                     }
                 }
         );
@@ -108,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Swap(6);
+
                     }
                 }
         );
@@ -120,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Swap(7);
+
                     }
                 }
         );
@@ -132,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Swap(8);
+
                     }
                 }
         );
@@ -144,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Swap(9);
+
                     }
                 }
         );
@@ -230,18 +246,26 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         if(swappable){
+            status = false;
             int num = 1;
             for(int i = 1; i <= 3; i++) {
                 for (int j = 1; j <= 3; j++) {
                     if (pos[i][j] == num) {
                         num += 1;
+                        if(status == false){
+                            status = true;
+                            move_value = move_value + 1;
+                            move_text.setText(move_value + "");
+
+                        }
+
                     }
                 }
             }
 
             if(num == 9){
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("ok");
+                builder.setMessage("Congratulations! Moves : " + move_value + "");
                 builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -251,6 +275,22 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog alert = builder.create();
                 alert.show();
                 shuffleTable(getWindow().getDecorView().getRootView());
+            }
+            if(num == 10){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Congratulations! Moves : " + move_value + "");
+                builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+                shuffleTable(getWindow().getDecorView().getRootView());
+                move_value = 0;
+                move_text.setText(move_value + "");
+
             }
         }
     }
