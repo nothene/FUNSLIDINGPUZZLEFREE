@@ -241,41 +241,35 @@ public class MainActivity extends AppCompatActivity {
                     pos[cur_x + dir[i][0]][cur_y + dir[i][1]] = pos[cur_x][cur_y];
                     pos[cur_x][cur_y] = tmp;
                     swappable = true;
+                    move_value = move_value + 1;
+                    move_text.setText(move_value + "");
                     break;
                 }
             }
         }
         if(swappable){
-            status = false;
             int num = 1;
             for(int i = 1; i <= 3; i++) {
                 for (int j = 1; j <= 3; j++) {
                     if (pos[i][j] == num) {
                         num += 1;
-                        if(status == false){
-                            status = true;
-                            move_value = move_value + 1;
-                            move_text.setText(move_value + "");
-
-                        }
-
                     }
                 }
             }
 
-            if(num == 9){
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Congratulations! Moves : " + move_value + "");
-                builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-                AlertDialog alert = builder.create();
-                alert.show();
-                shuffleTable(getWindow().getDecorView().getRootView());
-            }
+//            if(num == 9){
+//                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//                builder.setMessage("Congratulations! Moves : " + move_value + "");
+//                builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.cancel();
+//                    }
+//                });
+//                AlertDialog alert = builder.create();
+//                alert.show();
+//                shuffleTable(getWindow().getDecorView().getRootView());
+//            }
             if(num == 10){
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage("Congratulations! Moves : " + move_value + "");
